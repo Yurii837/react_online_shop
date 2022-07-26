@@ -1,0 +1,78 @@
+.select {
+
+  position: relative;
+  display: block;
+  user-select: none;
+  height: 20px;
+  overflow: hidden;
+  width: 80px;
+  border: 1px solid blue;
+  
+
+&__trigger {
+  position: absolute;
+  display: flex;
+  gap: 40px;
+  border: 1px solid yellow;
+  &:hover {
+    cursor: pointer;
+    background-color: #b2b2b2;
+  }
+}
+
+&__arrow {
+  width: 20px;
+  &::before {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 10px;
+    height: 2px;
+    background-color: #3b3b3b;
+    top: 6px;
+    right: 13px;
+    transform: rotate(35deg);
+  }
+  &::after {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 10px;
+    height: 2px;
+    background-color: #3b3b3b;
+    top: 6px;
+    right: 5px;
+    transform: rotate(-35deg);
+  }
+}
+
+  &__options {
+    border: 1px dotted red;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    top: 20px;
+    
+  }
+
+  &__option {
+    &:hover {
+      cursor: pointer;
+      background-color: #b2b2b2;
+    }
+  }
+}
+
+.open {
+  overflow: visible;
+  
+    .select__arrow {
+      &::before {
+        transform: rotate(-35deg);
+      }
+      &::after {
+        transform: rotate(35deg);
+      }
+    }
+}

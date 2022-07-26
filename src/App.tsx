@@ -12,13 +12,13 @@ function WithQuery(props: any) {
 //const {data,isLod, err} = useQuery('Query');
 
 export class App extends React.Component {
+
   render() {
     return (
       <>
         <WithQuery  query={GET_All_PRODUCTS}>
         {(options: { data: any; isLoading: boolean; }) => {
           if (options.isLoading) return <h1>Loading</h1>;
-          console.log(options.data)
           return (
             <div className="App">
               <h1>{options.data && options.data.category.products[0].name}</h1>

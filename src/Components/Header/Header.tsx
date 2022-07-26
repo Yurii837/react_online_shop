@@ -1,39 +1,32 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_CATEGORIES, GET_CATEGORY_LOC, GET_CURRENCIES, GET_CURRENCY_LOC } from "../../query/query";
+import { GET_CATEGORIES, GET_CATEGORY_LOC } from "../../query/query";
 import './Header.scss';
 import { Oval } from  'react-loader-spinner';
 import classNames from "classnames";
-import { selectedCategoryVar, selectedCurrencyVar } from '../../cache';
+import { selectedCategoryVar } from "../../cache";
+import { SelectCurrency } from "../SelectCurrency/SelectCurrency";
 
 
 function WithQuery(props: any) {
   return props.children(
     useQuery(props.query, props.options),
     useQuery(props.query2, props.options2),
-    useQuery(props.query3, props.options3),
-    useQuery(props.query4, props.options4),
   );
 }
 
 export class Header extends React.Component {
 
-  returnCurrencySumbol = (fullString: string) => {
-    return fullString.split(' ')[0]
-  }
-
   render () {
 
     return (
-        <WithQuery  query={GET_CATEGORIES} query2={GET_CATEGORY_LOC} query3={GET_CURRENCIES} query4={GET_CURRENCY_LOC}>
+        <WithQuery  query={GET_CATEGORIES} query2={GET_CATEGORY_LOC}>
         {(
           options: { data: { categories: any; }; }, 
           options2: { data: { selectedCategory: any; }; },
-          options3: { data: { currencies: any; }; },
-          options4: { data: any; }
         ) => {
 
-          if(!options.data && !options3.data) {
+          if(!options.data) {
             return (
             <Oval 
               height="100"
@@ -44,8 +37,6 @@ export class Header extends React.Component {
 
           const categoriesArr =  options.data.categories;
           const selectedCategory = options2.data.selectedCategory;
-          const currenciesArr = options3.data.currencies;
-          const selectedCurrency = options4.data.selectedCurrency;
 
 
           return (
@@ -64,29 +55,11 @@ export class Header extends React.Component {
                   )
                 })}
               </div>
-
-              <div className="header__currency">
-                <select 
-                  name="currencies"
-                  className=""
-                  // value={this.returnCurrencySumbol(selectedCurrency)}
-                  value={selectedCurrency}
-                  onChange={(e) => {selectedCurrencyVar(e.target.value)}}
-                >
-                  {currenciesArr.map((currencyObj: { symbol: string | undefined; label: string | undefined; }) => {
-                    return (
-                      <option key={currencyObj.symbol}>
-                        {`${currencyObj.symbol} ${currencyObj.label}`}
-                      </option>
-                    )
-                  })}
-
-                </select>
-              </div>
+              <SelectCurrency />
             </div>     
           )        
         }}
-      </WithQuery>
+      </WithQuery>       
     )
   }
 }
