@@ -1,4 +1,6 @@
 import { DocumentNode, gql } from '@apollo/client';
+import { selectedCategoryVar } from '../cache';
+// import { selectedCurrencyVar } from '../cache';
 
 export const GET_CATEGORIES: DocumentNode = gql`
   query categories {
@@ -12,6 +14,7 @@ query GetSelectedCategory {
   selectedCategory @client
 }`;
 
+
 export const GET_CURRENCIES: DocumentNode = gql`
 query currencies {
   currencies {
@@ -20,27 +23,35 @@ query currencies {
   }
 }`;
 
-
 export const GET_CURRENCY_LOC: DocumentNode = gql`
 query GetCurrency {
   selectedCurrency @client
 }`;
 
-export const GET_All_PRODUCTS: DocumentNode = gql`
-  query categories {
-    category {
+const selectedCategory = selectedCategoryVar();
+
+export const GET_CATEGORY_PRODUCTS: DocumentNode = gql`
+  query category ($selectedCategory: String!){
+    category (
+      input: {
+        title: $selectedCategory
+      }
+    ) {
       products {
-        name,
-        id,
-        category,
-        isInCart @client,
+      id
+			name
+      gallery
+      prices {
+        currency {
+          symbol
+        }
+        amount
       }
     }
-  }`;
+  }
+}`;
 
-// export const typeDefs = gql`
-//   extend type Query {
-//     currentCurrency: String!
-//     firstName: String!
-//   }
-// `;
+export const GET_CART_PRODUCTS: DocumentNode = gql`
+  query getCartProducts {
+    cartProducts @client
+  }`;

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { RefObject } from "react";
-// import onClickOutside from "react-onclickoutside";
 import { useQuery } from "@apollo/client";
 import { GET_CURRENCIES, GET_CURRENCY_LOC } from "../../query/query";
 import './SelectCurrency.scss';
@@ -50,8 +49,6 @@ handleClick = (event: any) => {
 
 
 
-
-
   render () {
     console.log(`render isOption ${this.state.isOptions}`)
     const {isOptions} = this.state;
@@ -88,7 +85,6 @@ handleClick = (event: any) => {
                       data-value={currencyObj.symbol} 
                       onClick={(e:any) => {
                         selectedCurrencyVar(e.target.dataset.value)
-                        this.handleClick(e)
                       }}                   
                     >
                       {`${currencyObj.symbol} ${currencyObj.label}`}
