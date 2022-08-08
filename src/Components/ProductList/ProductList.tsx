@@ -1,61 +1,36 @@
 import React from "react";
 import './ProductList.scss';
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { DocumentNode, QueryResult, TypedDocumentNode, useQuery, useReactiveVar } from "@apollo/client";
 import { Oval } from  'react-loader-spinner';
 import { GET_CATEGORY_PRODUCTS } from "../../query/query";
 import { selectedCategoryVar } from '../../cache';
-// import { cartProductsVar } from "../../cache";
 
 
 
-function WithQuery(props: any) {
+function WithQuery(props: { children: (arg0: QueryResult<any, { selectedCategory: string; }>) => any; query: DocumentNode | TypedDocumentNode<any, { selectedCategory: string; }>; }) {
+  const selectedCategory = useReactiveVar(selectedCategoryVar)
+
   return props.children(
-    useQuery(props.query, props.options),
-    // useReactiveVar()
-  );
+    useQuery(props.query, {
+      variables: {
+        selectedCategory: selectedCategory
+      }
+    }),
+    
+  )
 }
 
-// function WithReactiveVar(Component: React.Component) {
-//   const reactiveVar = useReactiveVar(props.reactiveVar)
-//   return (
-//     <reactiveVar={reactiveVar}/>
-//   )
-// }
-
-function WithVariable(props: any) {
-  return props(
-    useReactiveVar(props.reactiveVar),
-  );
-}
 
 export class ProductList extends React.Component {
 
-  // state = {selectedCategory: <ReturnVariable reactiveVar={selectedCategoryVar}/>}
-
-  
-// const a = useReactiveVar(selectedCategoryVar)
-
 
   render () {
-    // console.log(this.state.selectedCategory)
+  console.log(`list render`)
     return (
-      <>
-        {/* <ReturnVariable reactiveVar={selectedCategoryVar}>
-        {(data: any) => {
-          console.log(data)
-        }} */}
-        
-        <WithVariable reactiveVar={selectedCategoryVar}>
-          {(data: any) => console.log(`with variable deta ${data}`)}
-        
-        
-        <WithQuery  query={GET_CATEGORY_PRODUCTS} options={{
-          variables: {
-            selectedCategory: selectedCategoryVar()
-          }
-        }}>
+ 
+        <WithQuery  query={GET_CATEGORY_PRODUCTS} >
           {(
-            options: { data: { any: any; }; },
+            options: any          
           ) => {
   
             if(!options.data) {
@@ -67,22 +42,24 @@ export class ProductList extends React.Component {
               />
             )}  
   
-            const categoryProductsArr =  options.data;
-            console.log(categoryProductsArr)
+            const productsArr: Product[] =  options.data.category.products;
+            console.log(`StateSelectedCategore in List ${selectedCategoryVar()}`)
+            console.log(productsArr)
   
   
             return (
               <div className="">
                 <h1>Category Name</h1>
+                <div className="list">
+                  {productsArr.map((product) => 
+                  <div key={product.id}>{product.name}</div>
+                  )}
+                </div>
   
               </div>     
             )        
           }}
-        </WithQuery>
-        
-        </WithVariable>
-      </>      
+        </WithQuery>  
     )
-
   }
 }

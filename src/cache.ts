@@ -38,4 +38,4 @@ export const selectedCurrencyVar = makeVar<string>('$');
 export const cartProductsVar = makeVar<[]>([]);
 
 
-// export selectedCategory = selectedCategoryVar()
+console.log(selectedCategoryVar())

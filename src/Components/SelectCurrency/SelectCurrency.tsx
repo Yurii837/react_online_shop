@@ -8,8 +8,8 @@ import { selectedCurrencyVar } from '../../cache';
 
 function WithQuery(props: any) {
   return props.children(
-    useQuery(props.query, props.options),
-    useQuery(props.query2, props.options2),
+    useQuery(props.query),
+    useQuery(props.query2),
   );
 }
 
@@ -39,18 +39,18 @@ componentWillUnmount() {
 handleClick = (event: any) => {
   
   if(this.wrapperRef && this.wrapperRef.current.contains(event.target)) {
-    console.log(`click inside`)
+    // console.log(`click inside`)
     this.setState({isOptions: true})
   } else {
   this.setState({isOptions: false})
-  console.log(`click outside`)
+  // console.log(`click outside`)
   }
 }
 
 
 
   render () {
-    console.log(`render isOption ${this.state.isOptions}`)
+    // console.log(`render isOption ${this.state.isOptions}`)
     const {isOptions} = this.state;
 
     return (

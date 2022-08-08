@@ -52,3 +52,5 @@ export const GET_CART_PRODUCTS: DocumentNode = gql`
   query getCartProducts {
     cartProducts @client
   }`;
+
+console.log(`query render`)
