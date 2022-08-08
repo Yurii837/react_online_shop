@@ -33,8 +33,9 @@ export const cache = new InMemoryCache({
   }
 })
 
-
-// export const isInCartVar = makeVar<boolean>(false);
 export const selectedCategoryVar = makeVar<string>('all');
 export const selectedCurrencyVar = makeVar<string>('$');
 export const cartProductsVar = makeVar<[]>([]);
+
+
+// export selectedCategory = selectedCategoryVar()

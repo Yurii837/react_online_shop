@@ -2,6 +2,7 @@
 import React from "react";
 import { Header } from "./Components/Header/Header";
 import { ProductList } from './Components/ProductList/ProductList';
+
 // import {GET_All_PRODUCTS} from './query/query';
 
 // function WithQuery(props: any) {

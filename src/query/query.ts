@@ -1,6 +1,4 @@
 import { DocumentNode, gql } from '@apollo/client';
-import { selectedCategoryVar } from '../cache';
-// import { selectedCurrencyVar } from '../cache';
 
 export const GET_CATEGORIES: DocumentNode = gql`
   query categories {
@@ -28,10 +26,9 @@ query GetCurrency {
   selectedCurrency @client
 }`;
 
-const selectedCategory = selectedCategoryVar();
 
 export const GET_CATEGORY_PRODUCTS: DocumentNode = gql`
-  query category ($selectedCategory: String!){
+  query category($selectedCategory: String!) {
     category (
       input: {
         title: $selectedCategory
